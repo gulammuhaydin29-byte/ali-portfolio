@@ -1,18 +1,13 @@
-const { Resend } = require('resend');
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-  const { name, email, message } = req.body || {};
-  if (!name || !email || !message) return res.status(400).json({ error: 'All fields required' });
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  try {
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'gulammuhaydin29@gmail.com',
-      subject: `Portfolio contact from ${name}`,
-      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`
-    });
-    res.json({ success: true });
-  } catch (e) {
-    res.status(500).json({ error: 'Failed to send' });
-  }
+const nodemailer=require('nodemailer');
+module.exports=async(req,res)=>{
+  if(req.method!=='POST') return res.status(405).json({error:'Method not allowed'});
+  const{name,email,subject,message}=req.body||{};
+  if(!name||!email||!subject||!message) return res.status(400).json({error:'All fields required'});
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({error:'Invalid email'});
+  if(message.length>5000) return res.status(400).json({error:'Message too long'});
+  const transporter=nodemailer.createTransport({host:process.env.SMTP_HOST,port:Number(process.env.SMTP_PORT||587),secure:process.env.SMTP_SECURE==='true',auth:{user:process.env.SMTP_USER,pass:process.env.SMTP_PASS}});
+  try{
+    await transporter.sendMail({from:process.env.SMTP_USER,to:process.env.CONTACT_EMAIL||process.env.SMTP_USER,subject:`Portfolio: ${subject}`,text:`Name: ${name}\nEmail: ${email}\n\n${message}`,replyTo:email});
+    res.json({success:true});
+  }catch(e){res.status(500).json({error:'Failed to send'});}
 };

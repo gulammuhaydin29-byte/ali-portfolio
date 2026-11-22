@@ -65,8 +65,8 @@
       <input type="text" id="name" name="name" required />
     </div>
     <div class="field">
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" required />
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" required />
     </div>
     <div class="field">
       <label for="message">Message</label>
@@ -92,7 +92,7 @@
     if(!form.checkValidity()){msg.textContent='Please fill all required fields correctly.';msg.className='msg error';return;}
     btn.disabled=true;btn.textContent='Sending...';
     try{
-      const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:form.name.value,email:form.email.value,message:form.message.value})});
+      const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:form.name.value,email:form.email.value,subject:form.subject.value,message:form.message.value})});
       const data=await res.json();
       if(res.ok){msg.textContent='Message sent successfully.';msg.className='msg success';form.reset();}
       else{msg.textContent=data.error||'Failed to send. Please try again.';msg.className='msg error';}
