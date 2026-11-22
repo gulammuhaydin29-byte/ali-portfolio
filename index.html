@@ -125,11 +125,11 @@
   /* APPROACH */
   .approach{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative}
   .approach::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--line)}
-  .step{padding-top:24px;border-top:1px solid var(--line);transition:transform .4s ease}
-  .step:hover{transform:translateY(-4px)}
-  .step-n{font-family:'Space Grotesk';font-size:14px;color:var(--orange);margin-bottom:16px;font-weight:600}
-  .step-t{font-family:'Space Grotesk';font-size:clamp(18px,2vw,26px);font-weight:600;text-transform:uppercase;margin-bottom:12px}
-  .step-d{font-size:13px;line-height:1.7;color:var(--muted)}
+  .step{padding-top:24px;border-top:1px solid var(--line);transition:transform .4s ease,background .4s ease;padding-left:0}
+  .step:hover{transform:translateY(-4px);background:rgba(17,17,17,0.02)}
+  .step-n{font-family:'Space Grotesk';font-size:14px;color:var(--orange);margin-bottom:10px;font-weight:600;letter-spacing:.1em}
+  .step-t{font-family:'Space Grotesk';font-size:clamp(18px,2vw,26px);font-weight:600;text-transform:uppercase;margin-bottom:12px;line-height:1.1}
+  .step-d{font-size:13px;line-height:1.7;color:rgba(17,17,17,0.72)}
 
   /* CONTACT */
   .contact{background:var(--black);color:var(--white);padding:140px 60px}
