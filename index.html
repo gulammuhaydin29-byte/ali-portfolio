@@ -123,10 +123,13 @@
   .project-link:hover{color:var(--orange);border-color:var(--orange)}
 
   /* APPROACH */
-  .approach{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
-  .step{padding-top:24px;border-top:1px solid var(--line)}
+  .approach{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative}
+  .approach::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--line)}
+  .step{padding-top:24px;border-top:1px solid var(--line);transition:transform .4s ease}
+  .step:hover{transform:translateY(-4px)}
   .step-n{font-family:'Space Grotesk';font-size:14px;color:var(--orange);margin-bottom:16px;font-weight:600}
-  .step-t{font-family:'Space Grotesk';font-size:clamp(18px,2vw,26px);font-weight:600;text-transform:uppercase}
+  .step-t{font-family:'Space Grotesk';font-size:clamp(18px,2vw,26px);font-weight:600;text-transform:uppercase;margin-bottom:12px}
+  .step-d{font-size:13px;line-height:1.7;color:var(--muted)}
 
   /* CONTACT */
   .contact{background:var(--black);color:var(--white);padding:140px 60px}
@@ -288,11 +291,11 @@
 <section class="fade">
   <h2 class="section-title">How I work.</h2>
   <div class="approach">
-    <div class="step"><div class="step-n">01</div><div class="step-t">Understand</div></div>
-    <div class="step"><div class="step-n">02</div><div class="step-t">Plan</div></div>
-    <div class="step"><div class="step-n">03</div><div class="step-t">Design</div></div>
-    <div class="step"><div class="step-n">04</div><div class="step-t">Develop</div></div>
-    <div class="step"><div class="step-n">05</div><div class="step-t">Refine</div></div>
+    <div class="step"><div class="step-n">01</div><div class="step-t">Understand</div><p class="step-d">Understand the project requirements, goals, target audience, and actual problem before writing code.</p></div>
+    <div class="step"><div class="step-n">02</div><div class="step-t">Plan</div><p class="step-d">Define the structure, functionality, technologies, and development approach to create a clear direction.</p></div>
+    <div class="step"><div class="step-n">03</div><div class="step-t">Design</div><p class="step-d">Focus on clean interfaces, thoughtful layouts, usability, responsive behavior, and visual consistency.</p></div>
+    <div class="step"><div class="step-n">04</div><div class="step-t">Develop</div><p class="step-d">Build functional, responsive websites and applications using HTML, CSS, JavaScript, Node.js, and Python.</p></div>
+    <div class="step"><div class="step-n">05</div><div class="step-t">Refine</div><p class="step-d">Test functionality, fix issues, improve performance, check responsiveness, and polish the final experience.</p></div>
   </div>
 </section>
 
