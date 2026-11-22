@@ -37,6 +37,11 @@
   button{padding:18px 32px;border:none;border-radius:999px;background:var(--black);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:.3s;width:fit-content}
   button:hover{background:var(--orange)}
   button:disabled{opacity:.6;cursor:not-allowed}
+  [data-fs-error]{font-size:12px;color:#c0392b;margin-top:4px;display:none}
+  [data-fs-error]:not(:empty){display:block}
+  [data-fs-field][aria-invalid="true"]{border-color:#c0392b}
+  [data-fs-success]{display:none;color:var(--orange)}
+  [data-fs-success]:not(:empty){display:block}
   .msg{margin-top:24px;font-size:14px}
   .msg.success{color:var(--orange)}
   .msg.error{color:#c0392b}
@@ -59,21 +64,30 @@
   <div class="eyebrow">Contact</div>
   <h1>LET'S BUILD SOMETHING GREAT.</h1>
   <p class="lead">Have a project in mind? Send a message and I'll get back to you.</p>
-  <form id="contactForm">
+  <form id="contactForm" action="https://formspree.io/f/maeolwzj" method="POST">
     <div class="field">
       <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required />
+      <input type="text" id="name" name="name" required data-fs-field />
+      <span data-fs-error="name"></span>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required data-fs-field />
+      <span data-fs-error="email"></span>
     </div>
     <div class="field">
       <label for="subject">Subject</label>
-      <input type="text" id="subject" name="subject" required />
+      <input type="text" id="subject" name="subject" required data-fs-field />
+      <span data-fs-error="subject"></span>
     </div>
     <div class="field">
       <label for="message">Message</label>
-      <textarea id="message" name="message" required></textarea>
+      <textarea id="message" name="message" required data-fs-field></textarea>
+      <span data-fs-error="message"></span>
     </div>
-    <button type="submit" id="submitBtn">Send message</button>
-    <div class="msg" id="formMsg"></div>
+    <button type="submit" id="submitBtn" data-fs-submit-btn>Send message</button>
+    <div class="msg" id="formMsg" data-fs-success></div>
+    <div class="msg" data-fs-error></div>
   </form>
 </main>
 <footer>
@@ -83,22 +97,9 @@
 <script>
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
-  const form=document.getElementById('contactForm');
-  const btn=document.getElementById('submitBtn');
-  const msg=document.getElementById('formMsg');
-  form.addEventListener('submit',async(e)=>{
-    e.preventDefault();
-    msg.textContent='';msg.className='msg';
-    if(!form.checkValidity()){msg.textContent='Please fill all required fields correctly.';msg.className='msg error';return;}
-    btn.disabled=true;btn.textContent='Sending...';
-    try{
-      const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:form.name.value,email:form.email.value,subject:form.subject.value,message:form.message.value})});
-      const data=await res.json();
-      if(res.ok){msg.textContent='Message sent successfully.';msg.className='msg success';form.reset();}
-      else{msg.textContent=data.error||'Failed to send. Please try again.';msg.className='msg error';}
-    }catch(err){msg.textContent='Network error. Please try again.';msg.className='msg error';}
-    btn.disabled=false;btn.textContent='Send message';
-  });
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contactForm', formId: 'maeolwzj' });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
