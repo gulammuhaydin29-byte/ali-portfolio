@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Contact Gulam Muhaydin" />
+<title>Contact — Gulam Muhaydin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--white:#FFFFFF;--black:#111111;--orange:#FF6B00;--muted:rgba(17,17,17,0.55);--line:rgba(17,17,17,0.08);--glass:rgba(255,255,255,0.6)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--white);color:var(--black);-webkit-font-smoothing:antialiased}
+  h1,h2,.display{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+  a{color:inherit;text-decoration:none}
+  .nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:90%;max-width:1280px;height:64px;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:999px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:1000;transition:width .4s ease,height .4s ease}
+  .nav.scrolled{width:75%;height:52px}
+  .logo{font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:-.03em}
+  .logo span{color:var(--orange)}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+  .nav-links a:hover{color:var(--orange)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);margin:5px 0}
+  main{padding:160px 60px 100px;max-width:900px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.25em;color:var(--orange);margin-bottom:24px;font-weight:500}
+  h1{font-size:clamp(40px,6vw,80px);line-height:1;margin-bottom:40px;font-weight:700;text-transform:uppercase}
+  .lead{font-size:16px;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:60px}
+  form{display:grid;gap:24px}
+  .field{display:grid;gap:8px}
+  label{font-size:12px;letter-spacing:.15em;font-weight:600;text-transform:uppercase}
+  input,textarea{font-family:inherit;font-size:15px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--black);transition:.2s}
+  input:focus,textarea:focus{outline:none;border-color:var(--orange)}
+  textarea{min-height:160px;resize:vertical}
+  button{padding:18px 32px;border:none;border-radius:999px;background:var(--black);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:.3s;width:fit-content}
+  button:hover{background:var(--orange)}
+  button:disabled{opacity:.6;cursor:not-allowed}
+  .msg{margin-top:24px;font-size:14px}
+  .msg.success{color:var(--orange)}
+  .msg.error{color:#c0392b}
+  footer{padding:40px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;letter-spacing:.1em}
+  @media(max-width:768px){main{padding:120px 24px 80px}footer{flex-direction:column;gap:16px;text-align:center;padding:32px 24px}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="logo">GM<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<main>
+  <div class="eyebrow">Contact</div>
+  <h1>LET'S BUILD SOMETHING GREAT.</h1>
+  <p class="lead">Have a project in mind? Send a message and I'll get back to you.</p>
+  <form id="contactForm">
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
+    </div>
+    <div class="field">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+    <button type="submit" id="submitBtn">Send message</button>
+    <div class="msg" id="formMsg"></div>
+  </form>
+</main>
+<footer>
+  <div class="logo">GM<span>.</span></div>
+  <div>Gulam Muhaydin © 2026</div>
+</footer>
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+  const form=document.getElementById('contactForm');
+  const btn=document.getElementById('submitBtn');
+  const msg=document.getElementById('formMsg');
+  form.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    msg.textContent='';msg.className='msg';
+    if(!form.checkValidity()){msg.textContent='Please fill all required fields correctly.';msg.className='msg error';return;}
+    btn.disabled=true;btn.textContent='Sending...';
+    try{
+      const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:form.name.value,email:form.email.value,message:form.message.value})});
+      const data=await res.json();
+      if(res.ok){msg.textContent='Message sent successfully.';msg.className='msg success';form.reset();}
+      else{msg.textContent=data.error||'Failed to send. Please try again.';msg.className='msg error';}
+    }catch(err){msg.textContent='Network error. Please try again.';msg.className='msg error';}
+    btn.disabled=false;btn.textContent='Send message';
+  });
+</script>
+</body>
+</html>
