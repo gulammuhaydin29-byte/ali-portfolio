@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Gulam Muhaydin — Developer portfolio. Modern websites and digital experiences." />
 <title>Gulam Muhaydin — Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -191,7 +192,10 @@
     .approach{grid-template-columns:1fr 1fr}
     footer{flex-direction:column;gap:20px;text-align:center;padding:32px 24px}
   }
-  @media(max-width:390px){
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+    .fade{opacity:1;transform:none}
+  }
     .hero h1{font-size:56px}
     .skills-list{grid-template-columns:1fr}
     .approach{grid-template-columns:1fr}
@@ -261,6 +265,8 @@
         <p class="project-desc">A modern web experience built with clean code and thoughtful design.</p>
         <div class="project-tags">HTML · CSS · JavaScript</div>
         <a class="project-link" href="#">View project</a>
+        <a class="project-link" href="#" style="margin-left:16px">Live demo</a>
+        <a class="project-link" href="#" style="margin-left:16px">GitHub</a>
       </div>
     </div>
     <div class="project">
@@ -270,6 +276,8 @@
         <p class="project-desc">A performant application with a focused, minimal interface.</p>
         <div class="project-tags">Node.js · Python</div>
         <a class="project-link" href="#">View project</a>
+        <a class="project-link" href="#" style="margin-left:16px">Live demo</a>
+        <a class="project-link" href="#" style="margin-left:16px">GitHub</a>
       </div>
     </div>
   </div>
@@ -315,6 +323,11 @@
   document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('navLinks').classList.remove('open');document.getElementById('navToggle').classList.remove('open');document.getElementById('navOverlay').classList.remove('open')}));
   document.getElementById('navOverlay').addEventListener('click',()=>{document.getElementById('navLinks').classList.remove('open');document.getElementById('navToggle').classList.remove('open');document.getElementById('navOverlay').classList.remove('open')});
   const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:0,rootMargin:'0px 0px -5% 0px'});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+  const portrait=document.querySelector('.portrait');
+  if(portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    window.addEventListener('scroll',()=>{portrait.style.transform='translateY('+(window.scrollY*0.05)+'px)'});
+  }
   document.querySelectorAll('.fade').forEach(el=>io.observe(el));
   setTimeout(()=>document.querySelectorAll('.fade').forEach(el=>el.classList.add('in')),1200);
 </script>
