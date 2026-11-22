@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gulam Muhaydin — Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --black:#111111;
+    --orange:#FF6B00;
+    --muted:rgba(17,17,17,0.55);
+    --line:rgba(17,17,17,0.08);
+    --glass:rgba(255,255,255,0.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--white);
+    color:var(--black);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* NAV */
+  .nav{
+    position:fixed;top:18px;left:50%;transform:translateX(-50%);
+    width:90%;max-width:1280px;height:64px;
+    background:var(--glass);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border:1px solid var(--line);
+    border-radius:999px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;
+    z-index:1000;
+    transition:width .4s ease,height .4s ease,top .4s ease,padding .4s ease;
+  }
+  .nav.scrolled{width:75%;height:52px;top:14px;padding:0 24px}
+  .logo{font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:-.03em}
+  .logo span{color:var(--orange)}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;position:relative}
+  .nav-links a:hover{color:var(--orange)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);margin:5px 0;transition:.3s}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;padding:140px 60px 60px;
+    display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .hero-left{position:relative;z-index:2}
+  .eyebrow{font-size:12px;letter-spacing:.25em;font-weight:500;margin-bottom:28px;color:var(--orange)}
+  .hero h1{
+    font-size:clamp(32px,4.5vw,64px);line-height:1.1;font-weight:700;
+    text-transform:uppercase;max-width:640px;
+  }
+  .hero h1 .accent{color:var(--orange)}
+  .statement{
+    margin-top:32px;font-family:'Space Grotesk';font-size:clamp(18px,2.2vw,30px);
+    font-weight:500;letter-spacing:.04em;text-transform:uppercase;
+  }
+  .desc{margin-top:20px;max-width:420px;font-size:15px;line-height:1.7;color:var(--muted)}
+  .hero-btns{margin-top:40px;display:flex;gap:16px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:16px 32px;border-radius:999px;font-size:13px;font-weight:600;
+    letter-spacing:.12em;text-transform:uppercase;transition:.3s;cursor:pointer;border:none;
+  }
+  .btn-primary{background:var(--black);color:var(--white)}
+  .btn-primary:hover{background:var(--orange)}
+  .btn-ghost{background:transparent;color:var(--black);border:1px solid var(--black)}
+  .btn-ghost:hover{background:var(--black);color:var(--white)}
+  .hero-right{position:relative;display:flex;justify-content:center;align-items:flex-end;height:100%}
+  .portrait{
+    max-height:82vh;width:auto;object-fit:contain;
+    filter:drop-shadow(0 30px 60px rgba(17,17,17,0.18));
+  }
+  .portrait-wrap{position:relative}
+  .portrait-accent{
+    position:absolute;right:-40px;bottom:10%;width:120px;height:120px;
+    border:1px solid var(--orange);border-radius:50%;opacity:.6;z-index:-1;
+  }
+
+  /* SECTIONS */
+  section{padding:120px 60px}
+  .section-label{font-size:12px;letter-spacing:.25em;color:var(--orange);margin-bottom:40px;font-weight:500}
+  .section-title{font-size:clamp(40px,6vw,88px);line-height:.95;font-weight:700;text-transform:uppercase;margin-bottom:60px}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+  .about-big{font-size:clamp(28px,3.2vw,44px);line-height:1.2;font-weight:500;font-family:'Space Grotesk'}
+  .about-big em{font-style:normal;color:var(--orange)}
+  .about-side p{font-size:15px;line-height:1.8;color:var(--muted);max-width:460px}
+
+  /* SKILLS */
+  .skills-list{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+  .skill{font-family:'Space Grotesk';font-size:clamp(22px,3vw,40px);font-weight:600;letter-spacing:-.02em;padding:24px 0;border-top:1px solid var(--line);transition:.3s}
+  .skill:hover{color:var(--orange);padding-left:8px}
+  .skill-num{display:block;font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:.15em}
+
+  /* PROJECTS */
+  .projects{display:grid;gap:100px}
+  .project{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center}
+  .project:nth-child(even){grid-template-columns:1fr 1.3fr}
+  .project:nth-child(even) .project-img{order:2}
+  .project-img{aspect-ratio:16/10;background:#f2f2f2;overflow:hidden;border-radius:4px;position:relative}
+  .project-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .project:hover .project-img img{transform:scale(1.04)}
+  .project-name{font-family:'Space Grotesk';font-size:clamp(28px,4vw,52px);font-weight:700;text-transform:uppercase;line-height:1;margin-bottom:16px}
+  .project-desc{font-size:14px;color:var(--muted);line-height:1.7;max-width:360px;margin-bottom:16px}
+  .project-tags{font-size:11px;letter-spacing:.15em;color:var(--orange);margin-bottom:24px;font-weight:500}
+  .project-link{font-size:12px;letter-spacing:.15em;font-weight:600;border-bottom:1px solid var(--black);padding-bottom:4px;display:inline-block;transition:.3s}
+  .project-link:hover{color:var(--orange);border-color:var(--orange)}
+
+  /* APPROACH */
+  .approach{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+  .step{padding-top:24px;border-top:1px solid var(--line)}
+  .step-n{font-family:'Space Grotesk';font-size:14px;color:var(--orange);margin-bottom:16px;font-weight:600}
+  .step-t{font-family:'Space Grotesk';font-size:clamp(18px,2vw,26px);font-weight:600;text-transform:uppercase}
+
+  /* CONTACT */
+  .contact{background:var(--black);color:var(--white);padding:140px 60px}
+  .contact .section-label{color:var(--orange)}
+  .contact .section-title{color:var(--white)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end}
+  .contact-big{font-size:clamp(20px,2.4vw,30px);line-height:1.4;max-width:520px;color:rgba(255,255,255,.7)}
+  .contact-links{display:flex;flex-direction:column;gap:18px}
+  .contact-links a{font-family:'Space Grotesk';font-size:clamp(20px,2.6vw,32px);font-weight:600;text-transform:uppercase;transition:.3s;display:flex;align-items:center;gap:12px}
+  .contact-links a:hover{color:var(--orange);padding-left:8px}
+  .contact-links a::before{content:'→';color:var(--orange);font-size:.8em}
+
+  /* FOOTER */
+  footer{background:var(--black);color:var(--white);padding:40px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.08);font-size:12px;letter-spacing:.1em}
+  footer .logo span{color:var(--orange)}
+  .footer-social{display:flex;gap:24px}
+  .footer-social a:hover{color:var(--orange)}
+
+  .dark{background:var(--black);color:var(--white)}
+  .dark .section-title{color:var(--white)}
+  .dark .about-big{color:var(--white)}
+  .dark .about-side p,.dark .project-desc,.dark .desc{color:rgba(255,255,255,.6)}
+  .dark .skill,.dark .step{border-top-color:rgba(255,255,255,.12)}
+  .dark .project-link{border-bottom-color:var(--white)}
+  .dark .project-link:hover{color:var(--orange);border-color:var(--orange)}
+  .dark .btn-ghost{color:var(--white);border-color:var(--white)}
+  .dark .btn-ghost:hover{background:var(--white);color:var(--black)}
+  .fade{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s ease}
+  .fade.in{opacity:1;transform:none}
+  .hero h1,.statement,.desc,.hero-btns{opacity:0;transform:translateY(30px);animation:up .9s ease forwards}
+  .hero h1{animation-delay:.1s}
+  .statement{animation-delay:.25s}
+  .desc{animation-delay:.4s}
+  .hero-btns{animation-delay:.55s}
+  @keyframes up{to{opacity:1;transform:none}}
+  .portrait{opacity:0;animation:fadein 1.2s ease .3s forwards}
+  @keyframes fadein{to{opacity:1}}
+  .portrait:hover{transform:translateY(-6px);transition:transform .5s ease}
+  @media(max-width:768px){
+    .nav{width:94%;padding:0 20px}
+    .nav.scrolled{width:88%}
+    .nav-toggle{display:block}
+  .nav-links{display:none;position:fixed;top:0;right:0;width:80%;max-width:360px;height:100vh;background:var(--white);flex-direction:column;gap:0;align-items:flex-start;justify-content:center;padding:0 40px;z-index:1001;transform:translateX(100%);transition:transform .45s ease;box-shadow:-20px 0 60px rgba(0,0,0,.08)}
+  .nav-links.open{display:flex;transform:translateX(0)}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(17,17,17,.4);backdrop-filter:blur(2px);z-index:1000;opacity:0;transition:opacity .45s ease}
+  .nav-overlay.open{display:block;opacity:1}
+  .nav-links li{width:100%;border-bottom:1px solid var(--line)}
+  .nav-links a{font-family:'Space Grotesk';font-size:32px;font-weight:600;text-transform:uppercase;line-height:1.2;display:block;padding:18px 0;transition:.3s}
+  .nav-links a:hover{color:var(--orange);padding-left:8px}
+  .nav-toggle{display:block;z-index:1002}
+  .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    .hero{grid-template-columns:1fr;padding:120px 24px 40px;text-align:left}
+    .hero-right{order:-1;height:50vh;margin-bottom:20px}
+    .portrait{max-height:50vh}
+    .portrait-accent{display:none}
+    section{padding:80px 24px}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+    .skills-list{grid-template-columns:1fr 1fr}
+    .project,.project:nth-child(even){grid-template-columns:1fr}
+    .project:nth-child(even) .project-img{order:0}
+    .approach{grid-template-columns:1fr 1fr}
+    footer{flex-direction:column;gap:20px;text-align:center;padding:32px 24px}
+  }
+  @media(max-width:390px){
+    .hero h1{font-size:56px}
+    .skills-list{grid-template-columns:1fr}
+    .approach{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="logo">GM<span>.</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-overlay" id="navOverlay"></div>
+  <button class="nav-toggle" id="navToggle" aria-label="menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-left">
+    <h1>I DESIGN AND BUILD <span class="accent">DIGITAL PRODUCTS</span> WITH CLARITY, PRECISION, AND INTENT.</h1>
+    <div class="statement">I build digital experiences.</div>
+    <p class="desc">I create modern websites and digital experiences with clean code and thoughtful design.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#work">Explore work</a>
+      <a class="btn btn-ghost" href="#contact">Contact me</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="portrait-wrap">
+      <img class="portrait" src="1786985718119-Photoroom.png" alt="Gulam Muhaydin" />
+    </div>
+  </div>
+</section>
+
+<section id="about" class="dark fade">
+  <h2 class="section-title">A little about me.</h2>
+  <div class="about-grid">
+    <div class="about-big">I design and build <em>digital products</em> with clarity, precision, and intent.</div>
+    <div class="about-side">
+      <p>A developer focused on crafting clean, modern web experiences. I care about structure, performance, and the small details that make interfaces feel considered.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="fade">
+  <h2 class="section-title">My expertise.</h2>
+  <div class="skills-list">
+    <div class="skill"><span class="skill-num">01</span>HTML</div>
+    <div class="skill"><span class="skill-num">02</span>CSS</div>
+    <div class="skill"><span class="skill-num">03</span>JavaScript</div>
+    <div class="skill"><span class="skill-num">04</span>Node.js</div>
+    <div class="skill"><span class="skill-num">05</span>Python</div>
+  </div>
+</section>
+
+<section id="work" class="dark fade">
+  <h2 class="section-title">Selected work.</h2>
+  <div class="projects">
+    <div class="project">
+      <div class="project-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200" alt="Project 1"></div>
+      <div>
+        <div class="project-name">Project One</div>
+        <p class="project-desc">A modern web experience built with clean code and thoughtful design.</p>
+        <div class="project-tags">HTML · CSS · JavaScript</div>
+        <a class="project-link" href="#">View project</a>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200" alt="Project 2"></div>
+      <div>
+        <div class="project-name">Project Two</div>
+        <p class="project-desc">A performant application with a focused, minimal interface.</p>
+        <div class="project-tags">Node.js · Python</div>
+        <a class="project-link" href="#">View project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fade">
+  <h2 class="section-title">How I work.</h2>
+  <div class="approach">
+    <div class="step"><div class="step-n">01</div><div class="step-t">Understand</div></div>
+    <div class="step"><div class="step-n">02</div><div class="step-t">Plan</div></div>
+    <div class="step"><div class="step-n">03</div><div class="step-t">Design</div></div>
+    <div class="step"><div class="step-n">04</div><div class="step-t">Develop</div></div>
+    <div class="step"><div class="step-n">05</div><div class="step-t">Refine</div></div>
+  </div>
+</section>
+
+<section class="contact fade" id="contact">
+  <h2 class="section-title">Let's build something great.</h2>
+  <div class="contact-grid">
+    <div class="contact-big">Have a project in mind? Reach out and let's make it real.</div>
+    <div class="contact-links">
+      <a href="mailto:hello@gulammuhaydin.com">Email</a>
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">GM<span>.</span></div>
+  <div>Gulam Muhaydin © 2026</div>
+  <div class="footer-social">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)});
+  document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open');document.getElementById('navToggle').classList.toggle('open');document.getElementById('navOverlay').classList.toggle('open')});
+  document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('navLinks').classList.remove('open');document.getElementById('navToggle').classList.remove('open');document.getElementById('navOverlay').classList.remove('open')}));
+  document.getElementById('navOverlay').addEventListener('click',()=>{document.getElementById('navLinks').classList.remove('open');document.getElementById('navToggle').classList.remove('open');document.getElementById('navOverlay').classList.remove('open')});
+  const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:0,rootMargin:'0px 0px -5% 0px'});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+  setTimeout(()=>document.querySelectorAll('.fade').forEach(el=>el.classList.add('in')),1200);
+</script>
+</body>
+</html>
